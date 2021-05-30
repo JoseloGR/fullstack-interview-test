@@ -10,6 +10,7 @@ fastapi = "*"
 uvicorn = {extras = ["standard"],version = "*"}
 gitdb = "*"
 gitpython = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.7"
