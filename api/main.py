@@ -35,13 +35,6 @@ def get_branch_commits(branch: str):
     status_code = status.HTTP_200_OK
   return JSONResponse(status_code=status_code, content=result)
 
-@app.get("/api/v1/pull-requests", tags=["Git"])
-def get_pull_requests():
-  status_code = status.HTTP_204_NO_CONTENT
-  result = get_remote_pull_requests()
-  if result:
-    status_code = status.HTTP_200_OK
-  return JSONResponse(status_code=status_code, content=result)
 
 @app.post("/api/v1/pull-requests", tags=["Git"])
 def create_pull_requests(body: PullRequestModel = Body(...)):
@@ -50,4 +43,12 @@ def create_pull_requests(body: PullRequestModel = Body(...)):
   result = create_remote_pull_requests(payload)
   if result:
     status_code = status.HTTP_201_CREATED
+  return JSONResponse(status_code=status_code, content=result)
+
+@app.get("/api/v1/pull-requests", tags=["Git"])
+def get_pull_requests():
+  status_code = status.HTTP_204_NO_CONTENT
+  result = get_remote_pull_requests()
+  if result:
+    status_code = status.HTTP_200_OK
   return JSONResponse(status_code=status_code, content=result)

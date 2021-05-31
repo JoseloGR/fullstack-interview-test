@@ -4,7 +4,8 @@ from git import Repo
 from config import (
   LOCAL_REPO_PATH,
   GIT_USER,
-  GIT_PROJECT_NAME
+  GIT_PROJECT_NAME,
+  GAT
 )
 
 log = logging.getLogger("API")
@@ -62,10 +63,12 @@ def create_remote_pull_requests(payload: dict) -> bool:
   headers = {
     "Accept": "application/vnd.github.v3+json"
   }
-  response = requests.get(
+  response = requests.post(
     f"https://api.github.com/repos/{GIT_USER}/{GIT_PROJECT_NAME}/pulls",
+    auth=(GIT_USER, GAT),
     headers=headers,
-    json=payload
+    body=payload
   )
-  log.info(str(response))
+  print(response)
+  print(response.text)
   return response.status_code == 201

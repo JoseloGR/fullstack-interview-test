@@ -2,6 +2,6 @@ from pydantic import BaseModel
 
 class PullRequestModel(BaseModel):
   title: str
-  description: str
+  body: str
   head: str
   base: str
