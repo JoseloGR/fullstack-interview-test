@@ -27,7 +27,7 @@ export default function Navigation() {
           </div>
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
             <div onClick={() => router.push('/')} className="flex-shrink-0 flex items-center">
-              <span className="text-gray-700 text-xl brand-name">Git Flat</span>
+              <span className="text-blueGray-700 text-xl brand-name">Git Flat</span>
             </div>
             <div className="flex-grow hidden sm:block sm:ml-6">
               <div className="flex justify-start">
@@ -35,7 +35,7 @@ export default function Navigation() {
             </div>
           </div>
           <div className="absolute hidden sm:block inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <button onClick={() => router.push('/pr')} className="bg-transparent hover:bg-gray-800 text-gray font-semibold hover:text-white py-2 px-4 border border-gray-800 hover:border-transparent rounded-sm">
+            <button onClick={() => router.push('/pr')} className="bg-transparent hover:bg-blueGray-800 text-blueGray font-semibold hover:text-white py-2 px-4 border border-blueGray-800 hover:border-transparent rounded-sm">
               Pull Requests
             </button>
           </div>
