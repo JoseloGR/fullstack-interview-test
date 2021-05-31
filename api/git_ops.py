@@ -1,7 +1,11 @@
 import logging
 import requests
 from git import Repo
-from config import LOCAL_REPO_PATH, GIT_USER, GIT_PROJECT_NAME
+from config import (
+  LOCAL_REPO_PATH,
+  GIT_USER,
+  GIT_PROJECT_NAME
+)
 
 log = logging.getLogger("API")
 
@@ -45,6 +49,7 @@ def get_remote_pull_requests(state: str = 'all') -> list:
   if response:
     results = [
       {
+        'id': str(pr.get('id')),
         'title': pr.get('title', 'untitled'),
         'body': pr.get('body', ''),
         'status': pr.get('state', 'closed'),
