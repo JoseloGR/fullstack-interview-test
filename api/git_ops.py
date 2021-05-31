@@ -54,6 +54,7 @@ def get_remote_pull_requests(state: str = 'all') -> list:
         'title': pr.get('title', 'untitled'),
         'body': pr.get('body', ''),
         'status': pr.get('state', 'closed'),
+        'number': pr.get('number', '0'),
         'author': pr.get('head', {}).get('user', {}).get('login', 'owner')
       } for pr in response
     ]
@@ -70,3 +71,15 @@ def create_remote_pull_requests(payload: dict) -> bool:
     json=payload
   )
   return response.status_code == 201
+
+def close_remote_pull_requests(pull_number: str) -> bool:
+  headers = {
+    "Accept": "application/vnd.github.v3+json"
+  }
+  response = requests.patch(
+    f"https://api.github.com/repos/{GIT_USER}/{GIT_PROJECT_NAME}/pulls/{pull_number}",
+    auth=(GIT_USER, GAT),
+    headers=headers,
+    json={"state": "closed"}
+  )
+  return response.status_code == 200

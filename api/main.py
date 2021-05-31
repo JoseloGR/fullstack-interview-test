@@ -10,7 +10,8 @@ from git_ops import (
   get_all_branches,
   get_branch_detail,
   get_remote_pull_requests,
-  create_remote_pull_requests
+  create_remote_pull_requests,
+  close_remote_pull_requests
 )
 from models import PullRequestModel
 
@@ -54,6 +55,14 @@ def create_pull_requests(body: PullRequestModel = Body(...)):
   result = create_remote_pull_requests(payload)
   if result:
     status_code = status.HTTP_201_CREATED
+  return JSONResponse(status_code=status_code, content={'success': result})
+
+@app.patch("/api/v1/pull-requests/{number}", tags=["Git"])
+def close_pull_requests(number: str):
+  status_code = status.HTTP_204_NO_CONTENT
+  result = close_remote_pull_requests(number)
+  if result:
+    status_code = status.HTTP_200_OK
   return JSONResponse(status_code=status_code, content={'success': result})
 
 @app.get("/api/v1/pull-requests", tags=["Git"])
