@@ -27,7 +27,7 @@ export default function Commits({commits}) {
                 <tr key={`${commit.hexsha}`}>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-blueGray-900">{commit.summary}</div>
-                    <div class="text-sm text-blueGray-500">{ `Tamaño: ${commit.size}`} - {`Cantidad: ${commit.count}`}</div>
+                    <div className="text-sm text-blueGray-500">{ `Tamaño: ${commit.size}`} - {`Cantidad: ${commit.count}`}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-blueGray-900">{commit.author}</div>

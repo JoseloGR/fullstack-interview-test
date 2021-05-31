@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import Link from "next/link";
 import Container from "../../components/Container";
 import SuccessMessage from "../../components/SuccessMessage";
 import ErrorMessage from "../../components/ErrorMessage";
@@ -11,13 +12,17 @@ export default function CreatePR({branches}) {
 
   const onSubmit = async data => {
     const res = await fetch(
-      'http://127.0.0.1:8000/api/v1/pull-requests',
+      'http://localhost:8000/api/v1/pull-requests',
       {
         body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        },
         method: 'POST'
       }
     );
-    if (res.status == 201) {
+    const result = await res.json();
+    if (result['success']) {      
       setShowError(false);
       setShowSuccess(true);
     } else {
@@ -73,7 +78,7 @@ export default function CreatePR({branches}) {
                 <option value="" disabled>Selecciona</option>
                 {
                   branches.map(branch => (
-                    <option value={`${branch.name}`}>{branch.name}</option>    
+                    <option key={`${branch.name}-1`} value={`${branch.name}`}>{branch.name}</option>    
                   ))
                 }
               </select>
@@ -82,9 +87,9 @@ export default function CreatePR({branches}) {
               </div>
             </div>
             {
-              errors.base && 
+              errors.head && 
               <ErrorMessage>
-                {errors.base.type === 'required' && 'Debes seleccionar la branch head'}
+                {errors.head.type === 'required' && 'Debes seleccionar la branch head'}
               </ErrorMessage> 
             }
           </div>
@@ -100,7 +105,7 @@ export default function CreatePR({branches}) {
                 <option value="" disabled>Selecciona</option>
                 {
                   branches.map(branch => (
-                    <option value={`${branch.name}`}>{branch.name}</option>    
+                    <option key={`${branch.name}-2`} value={`${branch.name}`}>{branch.name}</option>    
                   ))
                 }
               </select>

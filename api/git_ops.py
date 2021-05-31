@@ -67,8 +67,6 @@ def create_remote_pull_requests(payload: dict) -> bool:
     f"https://api.github.com/repos/{GIT_USER}/{GIT_PROJECT_NAME}/pulls",
     auth=(GIT_USER, GAT),
     headers=headers,
-    body=payload
+    json=payload
   )
-  print(response)
-  print(response.text)
   return response.status_code == 201

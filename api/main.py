@@ -5,6 +5,7 @@ from fastapi import (
 )
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
+from fastapi.middleware.cors import CORSMiddleware
 from git_ops import (
   get_all_branches,
   get_branch_detail,
@@ -14,6 +15,16 @@ from git_ops import (
 from models import PullRequestModel
 
 app = FastAPI()
+
+origins = ['*']
+
+app.add_middleware(
+  CORSMiddleware,
+  allow_origins=origins,
+  allow_credentials=True,
+  allow_methods=["*"],
+  allow_headers=["*"],
+)
 
 @app.get("/", tags=["Home"])
 def home():
@@ -43,7 +54,7 @@ def create_pull_requests(body: PullRequestModel = Body(...)):
   result = create_remote_pull_requests(payload)
   if result:
     status_code = status.HTTP_201_CREATED
-  return JSONResponse(status_code=status_code, content=result)
+  return JSONResponse(status_code=status_code, content={'success': result})
 
 @app.get("/api/v1/pull-requests", tags=["Git"])
 def get_pull_requests():
