@@ -16,6 +16,7 @@ export default function Commits({commits}) {
               Fecha y hora
             </th>
             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-blueGray-800 uppercase tracking-wider">
+              Commit
             </th>
           </tr>
         </thead>
@@ -26,15 +27,17 @@ export default function Commits({commits}) {
                 <tr key={`${commit.hexsha}`}>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-blueGray-900">{commit.summary}</div>
+                    <div class="text-sm text-blueGray-500">{ `Tamaño: ${commit.size}`} - {`Cantidad: ${commit.count}`}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-blueGray-900">{commit.author}</div>
+                    <div className="text-sm text-blueGray-500">{commit.author_email}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-blueGray-900">{commit.datetime}</div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right">
-                  <div className="text-sm font-medium text-blueGray-900">Ver detalles</div>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm font-medium text-blueGray-900">{commit.hexsha}</div>
                   </td>
                 </tr>
               )
