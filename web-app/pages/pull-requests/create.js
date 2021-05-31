@@ -8,6 +8,8 @@ import ErrorMessage from "../../components/ErrorMessage";
 export default function CreatePR({branches}) {
   const [showError, setShowError] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showSuccessMR, setShowSuccessMR] = useState(false);
+  const [pullNumber, setPullNumber] = useState(0);
   const { register, handleSubmit, formState: {errors} } = useForm();
 
   const onSubmit = async data => {
@@ -25,8 +27,28 @@ export default function CreatePR({branches}) {
     if (result['success']) {      
       setShowError(false);
       setShowSuccess(true);
+      setPullNumber(result['number']);
     } else {
       setShowError(true);
+    }
+  }
+
+  const handleMergePR = async ()=> {
+    const res = await fetch(
+      `http://localhost:8000/api/v1/pull-requests/${pullNumber}/merge`,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: 'PUT'
+      }
+    );
+    const result = await res.json();
+    console.log(result);
+    if (result && result['merged']) {
+      setShowError(false);
+      setShowSuccess(false);
+      setShowSuccessMR(true);
     }
   }
 
@@ -137,12 +159,19 @@ export default function CreatePR({branches}) {
             showSuccess ?
             <div className="w-full px-3 mb-3">
               <SuccessMessage>
-                Pull Requests ha sido creado exitosamente. &nbsp;
-                <Link href="/pull-requests">
-                  <a className="text-green-900 underline">
-                    Haga click aquí para ver todos los Pull Requests
-                  </a>
-                </Link>
+                El Pull Requests ha sido creado exitosamente. &nbsp;
+                <a onClick={() => handleMergePR} className="text-green-900 underline">
+                  Haga click aquí para realizar el merge
+                </a>
+                </SuccessMessage>
+            </div> :
+            <></>
+          }
+          {
+            showSuccessMR ?
+            <div className="w-full px-3 mb-3">
+              <SuccessMessage>
+                El Pull Requests se ha realizado exitosamente.
                 </SuccessMessage>
             </div> :
             <></>

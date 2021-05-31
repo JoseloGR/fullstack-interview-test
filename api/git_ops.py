@@ -60,7 +60,7 @@ def get_remote_pull_requests(state: str = 'all') -> list:
     ]
   return results
 
-def create_remote_pull_requests(payload: dict) -> bool:
+def create_remote_pull_requests(payload: dict) -> dict:
   headers = {
     "Accept": "application/vnd.github.v3+json"
   }
@@ -70,7 +70,16 @@ def create_remote_pull_requests(payload: dict) -> bool:
     headers=headers,
     json=payload
   )
-  return response.status_code == 201
+  response_json = {
+    "status": response.status_code,
+    "success": False
+  }
+  if response.status_code == 201:
+    response = response.json()
+    response_json["number"] = response.get("number")
+    response_json["success"] = True
+
+  return response_json
 
 def close_remote_pull_requests(pull_number: str) -> bool:
   headers = {
@@ -83,3 +92,15 @@ def close_remote_pull_requests(pull_number: str) -> bool:
     json={"state": "closed"}
   )
   return response.status_code == 200
+
+def merge_remote_pull_requests(pull_number: str) -> dict:
+  headers = {
+    "Accept": "application/vnd.github.v3+json"
+  }
+  response = requests.put(
+    f"https://api.github.com/repos/{GIT_USER}/{GIT_PROJECT_NAME}/pulls/{pull_number}/merge",
+    auth=(GIT_USER, GAT),
+    headers=headers,
+    json={"commit_title": f"merge:{pull_number}"}
+  )
+  return {"status": response.status_code, "response": response.json()}
