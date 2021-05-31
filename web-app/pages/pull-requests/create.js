@@ -28,12 +28,13 @@ export default function CreatePR({branches}) {
       setShowError(false);
       setShowSuccess(true);
       setPullNumber(result['number']);
+      console.log('Pull Number',pullNumber);
     } else {
       setShowError(true);
     }
   }
 
-  const handleMergePR = async ()=> {
+  const handleMergePR = async () => {
     const res = await fetch(
       `http://localhost:8000/api/v1/pull-requests/${pullNumber}/merge`,
       {
@@ -49,6 +50,8 @@ export default function CreatePR({branches}) {
       setShowError(false);
       setShowSuccess(false);
       setShowSuccessMR(true);
+    } else {
+      setShowError(true);
     }
   }
 
@@ -160,10 +163,10 @@ export default function CreatePR({branches}) {
             <div className="w-full px-3 mb-3">
               <SuccessMessage>
                 El Pull Requests ha sido creado exitosamente. &nbsp;
-                <a onClick={() => handleMergePR} className="text-green-900 underline">
+                <button onClick={() => handleMergePR} className="text-green-900 underline">
                   Haga click aquí para realizar el merge
-                </a>
-                </SuccessMessage>
+                </button>
+              </SuccessMessage>
             </div> :
             <></>
           }
@@ -172,7 +175,7 @@ export default function CreatePR({branches}) {
             <div className="w-full px-3 mb-3">
               <SuccessMessage>
                 El Pull Requests se ha realizado exitosamente.
-                </SuccessMessage>
+              </SuccessMessage>
             </div> :
             <></>
           }
