@@ -9,7 +9,7 @@ export default function CreatePR({branches}) {
   const [showError, setShowError] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showSuccessMR, setShowSuccessMR] = useState(false);
-  const [pullNumber, setPullNumber] = useState(0);
+  const [pullNumber, setPullNumber] = useState();
   const { register, handleSubmit, formState: {errors} } = useForm();
 
   const onSubmit = async data => {
@@ -151,6 +151,8 @@ export default function CreatePR({branches}) {
                       Crear Pull Requests
             </button>
           </div>
+        </form>
+        <div className="flex-auto flex flex-col md:col-start-2 md:col-span-4 lg:col-start-2 lg:col-span-3">
           {
             showError ?
             <div className="w-full px-3 mb-3">
@@ -163,7 +165,7 @@ export default function CreatePR({branches}) {
             <div className="w-full px-3 mb-3">
               <SuccessMessage>
                 El Pull Requests ha sido creado exitosamente. &nbsp;
-                <button onClick={() => handleMergePR} className="text-green-900 underline">
+                <button onClick={() => handleMergePR()} className="text-green-900 underline">
                   Haga click aquí para realizar el merge
                 </button>
               </SuccessMessage>
@@ -179,7 +181,7 @@ export default function CreatePR({branches}) {
             </div> :
             <></>
           }
-        </form>
+        </div>
       </div>
     </Container>
   );
