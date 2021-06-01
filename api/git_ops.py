@@ -103,5 +103,4 @@ def merge_remote_pull_requests(pull_number: str) -> dict:
     headers=headers,
     json={"commit_title": f"merge:{pull_number}"}
   )
-  print(response.text)
   return {"status": response.status_code, "response": response.json()}

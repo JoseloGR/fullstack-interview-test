@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Link from "next/link";
 import Container from "../../components/Container";
 import SuccessMessage from "../../components/SuccessMessage";
 import ErrorMessage from "../../components/ErrorMessage";
@@ -10,7 +9,7 @@ export default function CreatePR({branches}) {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showSuccessMR, setShowSuccessMR] = useState(false);
   const [pullNumber, setPullNumber] = useState();
-  const { register, handleSubmit, formState: {errors} } = useForm();
+  const { register, handleSubmit, reset, formState: {errors} } = useForm();
 
   const onSubmit = async data => {
     const res = await fetch(
@@ -24,11 +23,11 @@ export default function CreatePR({branches}) {
       }
     );
     const result = await res.json();
-    if (result['success']) {      
+    if (result['success']) {
       setShowError(false);
       setShowSuccess(true);
       setPullNumber(result['number']);
-      console.log('Pull Number',pullNumber);
+      reset();
     } else {
       setShowError(true);
     }
@@ -45,7 +44,6 @@ export default function CreatePR({branches}) {
       }
     );
     const result = await res.json();
-    console.log(result);
     if (result && result['merged']) {
       setShowError(false);
       setShowSuccess(false);
