@@ -2,7 +2,7 @@
 
 Una vez que hayas clonado el proyecto deberás guardar el path absoluto, ya que es necesario para que el servidor de backend pueda funcionar correctamente
 
-Dentro de las variables de ambiente del backend lo deberás asignar a:
+Dentro de las variables de ambiente del backend en el archivo `.env` lo deberás asignar a:
 
 LOCAL_REPO_PATH=/home/`<user>`/`<workspace>`/fullstack-interview-test
 
@@ -18,7 +18,7 @@ Para este proyecto recomiendo utilizar `pipenv`. Previamente debes tener instala
 
 Para correr el servidor backend en localhost debes ejecutar las siguientes líneas
 
-En este punto ya debes haber creado un archivo `.env` con las variables de ambiente necesarias para el backend, esto dentro del directorio api
+En este punto ya debes haber creado un archivo `.env` en caso de que no exista, con las variables de ambiente necesarias para el backend, esto dentro del directorio api
 
 ```
 cd api/
@@ -41,7 +41,7 @@ Para correr el proyecto sólo se deben instalar las dependencias con npm
 
 Es necesario tener instalado la última versión de NodeJS, por lo menos se debe tener la versión `v12.13.0`
 
-Debes crear un archivo `.env.local` con las variables de ambiente necesarias para el proyecto
+Debes crear un archivo `.env.local` en caso de que no exista, con las variables de ambiente necesarias para el proyecto
 
 
 ```
